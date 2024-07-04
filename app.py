@@ -8,6 +8,7 @@ root_path="/home/xlab-app-center"
 launch="https://github.com/lgkkey/openxlab_comfyui_cpu/blob/main/launch.py"
 
 if (os.path.exists(f"{root_path}/launch.py")):
+    print("launch.py exists")
     os.system(f"rm -rf {root_path}/launch.py")
 
 print(f"wget -c -o launch.py  --no-check-certificate {launch}")
