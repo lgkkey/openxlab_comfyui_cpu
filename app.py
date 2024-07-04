@@ -2,7 +2,15 @@ import os
 os.system("pwd")
 os.system("ls -la")
 print("--------------------------------------")
-
+packeages=[
+    "libgl1",
+    "libglib2.0-0",
+    "git-lfs"
+]
+os.system("apt-get  update")
+for p in packeages:
+    os.system(f"apt-get install -y {p}")
+    print(f"apt-get install -y {p}")
 # 更新文件
 root_path="/home/xlab-app-center"
 launch="https://github.com/lgkkey/openxlab_comfyui_cpu/blob/main/launch.py"
