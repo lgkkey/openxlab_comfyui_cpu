@@ -5,7 +5,7 @@ print("--------------------------------------")
 
 # 更新文件
 root_path="/home/xlab-app-center"
-launch="https://raw.githubusercontent.com/lgkkey/openxlab_comfyui_cpu"
+launch="https://github.com/lgkkey/openxlab_comfyui_cpu.git"
 
 if (os.path.exists(f"{root_path}/openxlab_comfyui_cpu")):
     print("openxlab_comfyui_cpu exists")
