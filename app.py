@@ -14,6 +14,10 @@ if (os.path.exists(f"{root_path}/launch.py")):
 print(f"wget -c -o launch.py  --no-check-certificate {launch}")
 os.system(f"wget -c -o launch.py  --no-check-certificate {launch}")
 
+if (os.path.exists(f"{root_path}/launch.py")):
+    print("launch.py update success")
+    os.system(f"cat {root_path}/launch.py")
+    print("--------------------------------------")
     
 os.system("ls -la")
 print("----------------start launch.py----------------------")
