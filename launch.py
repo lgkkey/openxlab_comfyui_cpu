@@ -1,7 +1,7 @@
 import os
 os.system("pwd")
 os.system("ls -la")
-print("--------------------------------------")
+print("---------------launch.py-----------------------")
 os.system("git clone https://github.com/comfyanonymous/ComfyUI")
 
 os.chdir("ComfyUI")
