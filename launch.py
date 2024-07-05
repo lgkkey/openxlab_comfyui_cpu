@@ -21,7 +21,7 @@ os.chdir("../..")
 os.system("ls -la")
 print("----------------start app_start.py----------------------")
 
-from gradio import gr
+import gradio as gr
 def output_txt(input):
     return "output: "+input
 with gr.Blocks() as demo:
