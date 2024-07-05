@@ -1,4 +1,7 @@
 import os
+import subprocess
+import time
+import threading
 os.system("pwd")
 os.system("ls -la")
 print("---------------launch.py-----------------------")
@@ -18,4 +21,38 @@ os.chdir("../..")
 os.system("ls -la")
 print("----------------start app_start.py----------------------")
 
-os.system(f"python main.py --cpu --listen")
+from gradio import gr
+def output_txt(input):
+    return "output: "+input
+with gr.Blocks() as demo:
+    gr.Markdown("Hello, **world!**")
+    with gr.Row():
+        input=gr.Textbox()
+        output=gr.Textbox(show_copy_button=True)
+    
+    run=gr.Button("Run")
+    clear=gr.Button("Clear")
+    event=run.click(output_txt,inputs=[input],outputs=[output])
+    clear.click(lambda: ["",""],inputs=[],outputs=[input,output])
+    
+
+
+def start():
+    try:
+        command="nohup python main.py --cpu --listen  --port 7860 "
+        process = subprocess.Popen(command, shell=True)
+        print("start success----------------")
+        time.sleep(60*30)
+        print("end----------------")
+    except Exception as e:
+        print("start error: ",e)
+        
+start_thread = threading.Thread(target=start)
+start_thread.start()
+start_thread.join()
+
+while True:
+    print("loop...")
+    demo.launch()
+    # os.system(f"python main.py --cpu --listen ")
+    time.sleep(10)
