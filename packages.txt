@@ -1,1 +1,9 @@
+libpcre3 
+libpcre3-dev
+pcre  
+pcre-devel 
+openssl 
+openssl-devel 
+zlib  
+zlib-devel
 git-lfs
