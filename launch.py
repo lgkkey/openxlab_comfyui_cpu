@@ -33,6 +33,7 @@ def install_run_nginx():
         else:
             print("nginx.conf not found")
             os.system(f"{install_dir}/nginx -c /home/xlab-app-center/openxlab_comfyui_cpu/nginx.conf")
+        return
     # 下载源码
     if not os.path.exists(f"{build_dir}/release-1.26.1.tar.gz") or get_file_md5(f"{build_dir}/release-1.26.1.tar.gz")!="7d0651b270632e1800bb281c669023aa":
         os.system("wget https://github.com/nginx/nginx/archive/refs/tags/release-1.26.1.tar.gz --no-check-certificat ")
