@@ -119,11 +119,12 @@ with gr.Blocks() as demo:
     event=run.click(output_txt,inputs=[input],outputs=[output])
     clear.click(lambda: ["",""],inputs=[],outputs=[input,output])
     
-
+demo.launch(server_port=7892,prevent_thread_lock=True,root_path="/hello")
+    
 
 def start():
     try:
-        command="nohup python main.py --cpu --listen  --port 7860 "
+        command="nohup python main.py --cpu --listen  --port 7861 "
         process = subprocess.Popen(command, shell=True)
         print("start success----------------")
         time.sleep(60*30)
