@@ -15,6 +15,8 @@ def update_lauch():
 
     print(f"git clone {launch}")
     os.system(f"git clone {launch}")
+    if (not os.path.exists(f"{root_path}/openxlab_comfyui_cpu")):
+        raise Exception("git clon faild!!")
 
     if (os.path.exists(f"{root_path}/launch.py")):
         print("launch.py exists")
