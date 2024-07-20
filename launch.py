@@ -106,6 +106,8 @@ os.system("ls -la")
 print("----------------start app_start.py----------------------")
 
 import gradio as gr
+if (hasattr(gr,'__version__')):
+    print(f"Gradio version: {gr.__version__}")
 def output_txt(input):
     return "output: "+input
 with gr.Blocks() as demo:
@@ -118,9 +120,11 @@ with gr.Blocks() as demo:
     clear=gr.Button("Clear")
     event=run.click(output_txt,inputs=[input],outputs=[output])
     clear.click(lambda: ["",""],inputs=[],outputs=[input,output])
-    
-demo.launch(server_port=7892,prevent_thread_lock=True,root_path="/hello")
-    
+try:    
+    demo.launch(server_port=7892,prevent_thread_lock=True,root_path="/hello")
+except Exception as e:
+    print(e)
+    demo.launch(server_port=7892,prevent_thread_lock=True)
 
 def start():
     try:
