@@ -5,7 +5,7 @@ print("--------------------------------------")
 
 # 更新文件
 root_path="/home/xlab-app-center"
-launch="https://github.com/lgkkey/openxlab_comfyui_cpu.git"
+launch="https://gitcode.com/qq_40683832/openxlab_comfyui_cpu.git"
 
 
 def update_lauch():
