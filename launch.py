@@ -116,17 +116,17 @@ with gr.Blocks() as demo:
     gr.Markdown("Hello, **world!**")
     with gr.Row():
         input=gr.Textbox()
-        output=gr.Textbox(show_copy_button=True)
+        output=gr.Textbox()
     
     run=gr.Button("Run")
     clear=gr.Button("Clear")
     event=run.click(output_txt,inputs=[input],outputs=[output])
     clear.click(lambda: ["",""],inputs=[],outputs=[input,output])
 try:    
-    demo.launch(server_port=7892,prevent_thread_lock=True,root_path="/hello")
+    demo.launch(server_port=7890,prevent_thread_lock=True,root_path="/hello")
 except Exception as e:
     print(e)
-    demo.launch(server_port=7892,prevent_thread_lock=True)
+    demo.launch(server_port=7890,prevent_thread_lock=True)
 
 def start():
     try:
