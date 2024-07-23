@@ -1,2 +1,7 @@
 libpcre3 
 openssl 
+libbpf-dev
+libmnl-dev
+libcap-dev
+binutils-dev
+libelf-dev
