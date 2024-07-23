@@ -104,7 +104,7 @@ def page_test():
         uvicorn.run(fastapi_app,host='0.0.0.0',port=7890)
     except Exception as e:
         print(e)
-        
+threading.Thread(target=page_test).start()        
 
 #test
 print("install nginx")
