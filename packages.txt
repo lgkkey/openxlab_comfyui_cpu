@@ -1,3 +1,4 @@
 libpcre3 
 openssl 
-netstat-nat
+git-lfs
+net-tools
