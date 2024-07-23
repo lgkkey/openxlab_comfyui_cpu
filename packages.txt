@@ -1,4 +1,3 @@
 libpcre3 
 openssl 
-git-lfs
 net-tools
