@@ -1,3 +1,4 @@
 libpcre3 
 openssl 
 git-lfs
+openssl
