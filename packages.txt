@@ -1,6 +1,3 @@
 libpcre3 
 openssl 
-libbpf-dev
-libcap-dev
-libmnl-dev
-libelf-dev
+netstat-nat
