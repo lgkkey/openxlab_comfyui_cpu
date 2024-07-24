@@ -82,11 +82,13 @@ def install_run_nginx():
         else:
             print("nginx.conf not found")
             os.system(f"{install_dir}/nginx -c /home/xlab-app-center/openxlab_comfyui_cpu/nginx.conf")
-
-def page_test():
+import asyncio
+def page_test(loop):
     from fastapi import FastAPI
+    from concurrent.futures import ThreadPoolExecutor
     import gradio as gr
-    fastapi_app=FastAPI
+    asyncio.set_event_loop(loop)
+    fastapi_app=FastAPI()
     def output_txt(input):
         return "output: "+input
     with gr.Blocks() as demo:
@@ -104,8 +106,13 @@ def page_test():
         uvicorn.run(fastapi_app,host='0.0.0.0',port=7890)
     except Exception as e:
         print(e)
-threading.Thread(target=page_test).start()        
+loop=asyncio.new_event_loop()
+threading.Thread(target=page_test,args=(loop,)).start()        
 
+while(1):
+    time.sleep(10)
+    pass
+exit -1
 #test
 print("install nginx")
 install_run_nginx()
