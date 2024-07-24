@@ -109,10 +109,7 @@ def page_test(loop):
 loop=asyncio.new_event_loop()
 threading.Thread(target=page_test,args=(loop,)).start()        
 
-while(1):
-    time.sleep(10)
-    pass
-exit -1
+
 #test
 print("install nginx")
 install_run_nginx()
