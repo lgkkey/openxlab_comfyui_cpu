@@ -82,35 +82,14 @@ def install_run_nginx():
         else:
             print("nginx.conf not found")
             os.system(f"{install_dir}/nginx -c /home/xlab-app-center/openxlab_comfyui_cpu/nginx.conf")
-import asyncio
-def page_test(loop):
-    from fastapi import FastAPI
-    from concurrent.futures import ThreadPoolExecutor
-    import gradio as gr
-    asyncio.set_event_loop(loop)
-    fastapi_app=FastAPI()
-    def output_txt(input):
-        return "output: "+input
-    with gr.Blocks() as demo:
-        gr.Markdown("Hello, **world!**")
-        with gr.Row():
-            input=gr.Textbox()
-            output=gr.Textbox()
-        
-        run=gr.Button("Run")
-        clear=gr.Button("Clear")
-        event=run.click(output_txt,inputs=[input],outputs=[output])
-        clear.click(lambda: ["",""],inputs=[],outputs=[input,output])
-    try:    
-        fastapi_app=gr.mount_gradio_app(fastapi_app,demo,path="/hello")
-        uvicorn.run(fastapi_app,host='0.0.0.0',port=7890)
-    except Exception as e:
-        print(e)
-loop=asyncio.new_event_loop()
-threading.Thread(target=page_test,args=(loop,)).start()        
 
+def launch_app1():
+    app1=f"{root_path}/openxlab_comfyui_cpu/page/app1.py"
+    if os.path.exists(app1):
+        os.system(f"python {app1}")
 
-#test
+threading.Thread(target=launch_app1).start()
+    
 print("install nginx")
 install_run_nginx()
 print("finish nginx")
